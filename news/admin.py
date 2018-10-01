@@ -6,6 +6,6 @@ class ArticleAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
 
     # Register your models here.
-admin.site.register(Article)
+admin.site.register(Article, ArticleAdmin)
 admin.site.register(tags)
 admin.site.register(Editor)

@@ -1,5 +1,33 @@
 {% extends 'all_news/base.html' %}
 {% block content %}
 <!-- block supper helps us maintain all the content that was defined in the parent block already -->
+
+<div class="container">
+    <div class="row">
+        {% for news_item in news %}
+
+        <div class="col-md-4">
+            <img class="w-100" src="{{news_item.article_image.url}}" class="img-responsive" alt="Image">
+            <h3>
+                {{ news_item.title }}
+            </h3>
+            <div class="pl-3">
+                <p>
+                    {{ news_item.post }}
+                </p>
+            </div>
+            <div class="d-flex">
+                <span>
+                    {{ news_item.author }}
+                </span>
+            </div>
+        </div>
+        {% empty %}
+    </div>
+    <div class="container">
+        <h1 class="text-danger">There are no news items to Display </h1>
+    </div>
+    {% endfor %}
+</div>
 {{ block.super }}
 {% endblock %}

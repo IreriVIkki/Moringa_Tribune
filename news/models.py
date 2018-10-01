@@ -1,4 +1,5 @@
 from django.db import models
+import datetime as dt
 
 # Create your models here.
 
@@ -47,6 +48,7 @@ class Article(models.Model):
     tags = models.ManyToManyField(tags)
     # i think this mf right here will add the current date and time of Article creation automatically by default
     pub_date = models.DateTimeField(auto_now_add=True)
+    article_image = models.ImageField(upload_to='articles/', blank=True)
 
     def __str__(self):
         return self.title
@@ -57,3 +59,24 @@ class Article(models.Model):
     def delete_article(self):
         article = Article.objects.get(pk=self.id)
         article.delete()
+
+    @classmethod
+    def todays_news(cls):
+        today = dt.date.today()
+        news = cls.objects.filter(pub_date__date=today)
+        return news
+
+    @classmethod
+    def days_news(cls, date):
+        news = cls.objects.filter(pub_date__date=date)
+        return news
+
+    @classmethod
+    def search_by_title(cls, seart_term):
+        news = cls.objects.filter(title__icontains=seart_term)
+        return news
+
+
+class NewsLetterRecipients(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
